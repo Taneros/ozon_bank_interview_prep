@@ -26,12 +26,12 @@ project-template/
 │   ├── public/
 │   ├── src/
 │   │   ├── components/
-│   │   │   └── UserTable.tsx
+
 │   │   ├── lib/
 │   │   │   ├── api.ts
 │   │   │   └── queryClient.ts
 │   │   ├── hooks/
-│   │   │   └── useUsers.ts
+
 │   │   ├── utils/
 │   │   ├── App.tsx
 │   │   ├── main.tsx

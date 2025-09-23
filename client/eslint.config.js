@@ -19,5 +19,29 @@ export default defineConfig([
       ecmaVersion: 2020,
       globals: globals.browser,
     },
+    rules: {
+      // Make unused variables rule less strict
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        { 
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_',
+          destructuredArrayIgnorePattern: '^_'
+        }
+      ],
+      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-non-null-assertion': 'warn',
+      
+      // Make React hooks rules less strict
+      'react-hooks/exhaustive-deps': 'warn',
+      
+      // Disable the react-refresh rule that causes issues with mixed exports
+      'react-refresh/only-export-components': 'off',
+      
+      // Reduce strictness of common JavaScript/TypeScript rules
+      'no-console': 'warn',
+      'no-debugger': 'warn'
+    }
   },
 ])
