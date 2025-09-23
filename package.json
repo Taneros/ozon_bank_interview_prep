@@ -1,0 +1,25 @@
+{
+  "name": "project-template",
+  "version": "1.0.0",
+  "description": "A modern React project template with TanStack Table, TanStack React Query, JSON Server, and Shadcn/UI",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
+    "dev:client": "cd client && npm run dev",
+    "dev:server": "cd server && node server.js",
+    "build": "cd client && npm run build"
+  },
+  "keywords": [
+    "react",
+    "vite",
+    "tanstack-table",
+    "tanstack-react-query",
+    "json-server",
+    "shadcn-ui",
+    "tailwindcss"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
