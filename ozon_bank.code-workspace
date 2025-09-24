@@ -4,5 +4,12 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"editor.foldingImportsByDefault": true,
+		"javascript.updateImportsOnFileMove.enabled": "always",
+		"typescript.updateImportsOnFileMove.enabled": "always",
+		"typescript.preferences.preferTypeOnlyAutoImports": true,
+		"javascript.preferences.importModuleSpecifier": "non-relative",
+		"typescript.preferences.importModuleSpecifier": "non-relative"
+	}
 }

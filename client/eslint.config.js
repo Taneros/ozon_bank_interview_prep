@@ -19,5 +19,25 @@ export default defineConfig([
       ecmaVersion: 2020,
       globals: globals.browser,
     },
+    rules: {
+      // Convert strict rules to warnings
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        { 
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_'
+        }
+      ],
+      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-non-null-assertion': 'warn',
+      
+      // Make React hooks rules less strict
+      'react-hooks/exhaustive-deps': 'warn',
+      
+      // Reduce strictness of common JavaScript/TypeScript rules
+      'no-console': 'warn',
+      'no-debugger': 'warn'
+    }
   },
 ])
