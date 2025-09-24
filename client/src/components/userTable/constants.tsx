@@ -1,4 +1,5 @@
 import { type ColumnDef } from "@tanstack/react-table";
+import { HeaderButton } from "@/components/UserTable/components/HeaderButton";
 
 export type User = {
   id: string;
@@ -13,35 +14,96 @@ export type User = {
 
 export const columns: ColumnDef<User>[] = [
   {
-    accessorKey: 'id',
-    header: 'ID'
+    accessorKey: "id",
+    header: "ID",
+    enableSorting: true,
   },
   {
-    accessorKey: 'firstName',
-    header: 'First Name'
+    accessorKey: "firstName",
+    header: ({ column }) => {
+      const isSorted = column.getIsSorted();
+      return (
+        <HeaderButton
+          isSorted={isSorted}
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          First Name
+        </HeaderButton>
+      );
+    },
+    enableSorting: true,
   },
   {
-    accessorKey: 'lastName',
-    header: 'Last Name'
+    accessorKey: "lastName",
+    header: ({ column }) => {
+      const isSorted = column.getIsSorted();
+      return (
+        <HeaderButton
+          isSorted={isSorted}
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Last Name
+        </HeaderButton>
+      );
+    },
+    enableSorting: true,
   },
   {
-    accessorKey: 'email',
-    header: 'Email'
+    accessorKey: "email",
+    header: "Email",
+    enableSorting: true,
   },
   {
-    accessorKey: 'city',
-    header: 'City'
+    accessorKey: "city",
+    header: ({ column }) => {
+      const isSorted = column.getIsSorted();
+
+      return (
+        <HeaderButton
+          isSorted={isSorted}
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          City
+        </HeaderButton>
+      );
+    },
+    enableSorting: true,
   },
   {
-    accessorKey: 'profession',
-    header: 'Profession'
+    accessorKey: "profession",
+    header: "Profession",
+    enableSorting: true,
   },
   {
-    accessorKey: 'age',
-    header: 'Age'
+    accessorKey: "age",
+    header: ({ column }) => {
+      const isSorted = column.getIsSorted();
+
+      return (
+        <HeaderButton
+          isSorted={isSorted}
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Age
+        </HeaderButton>
+      );
+    },
+    enableSorting: true,
   },
   {
-    accessorKey: 'joinDate',
-    header: 'Join Date'
-  }
+    accessorKey: "joinDate",
+    header: ({ column }) => {
+      const isSorted = column.getIsSorted();
+
+      return (
+        <HeaderButton
+          isSorted={isSorted}
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Join Date
+        </HeaderButton>
+      );
+    },
+    enableSorting: true,
+  },
 ];

@@ -35,6 +35,9 @@ export default defineConfig([
       // Make React hooks rules less strict
       'react-hooks/exhaustive-deps': 'warn',
       
+      // Disable the react-refresh rule that causes issues with mixed exports
+      'react-refresh/only-export-components': 'off',
+      
       // Reduce strictness of common JavaScript/TypeScript rules
       'no-console': 'warn',
       'no-debugger': 'warn'
