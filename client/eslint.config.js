@@ -20,13 +20,14 @@ export default defineConfig([
       globals: globals.browser,
     },
     rules: {
-      // Convert strict rules to warnings
+      // Make unused variables rule less strict
       '@typescript-eslint/no-unused-vars': [
         'warn',
         { 
           argsIgnorePattern: '^_',
           varsIgnorePattern: '^_',
-          caughtErrorsIgnorePattern: '^_'
+          caughtErrorsIgnorePattern: '^_',
+          destructuredArrayIgnorePattern: '^_'
         }
       ],
       '@typescript-eslint/no-explicit-any': 'warn',
