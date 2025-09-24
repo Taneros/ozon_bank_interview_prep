@@ -17,21 +17,27 @@ import {
 } from "@/components/ui/table";
 import { useUsers } from "@/hooks/useUsers";
 
+const PAGE_SIZE = 10;
+
 export const UserTable: FC = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const sortBy = sorting[0]?.id;
   const sortOrder = sorting[0] ? (sorting[0].desc ? "desc" : "asc") : undefined;
 
-  const { data, isLoading, isError, error } = useUsers({
-    sortBy,
-    sortOrder,
-  });
+  const { totalCount, users, isLoading, isError, error } = useUsers(
+    { page: currentPage, pageSize: PAGE_SIZE },
+    {
+      sortBy,
+      sortOrder,
+    }
+  );
 
   const columns = useColumns();
 
   const table = useReactTable({
-    data,
+    data: users,
     columns,
     state: {
       sorting,

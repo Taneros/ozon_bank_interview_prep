@@ -5,14 +5,30 @@ const middlewares = jsonServer.defaults()
 
 // Reduce delay to a more reasonable amount (150ms instead of 1800ms)
 server.use((req, res, next) => {
-  setTimeout(next, 150)
+  setTimeout(next, 1500)
 })
 
-// Disable browser caching
+// // Disable browser caching
+// server.use((req, res, next) => {
+//   res.setHeader('Cache-Control', 'no-store')
+//   next()
+// })
+
 server.use((req, res, next) => {
-  res.setHeader('Cache-Control', 'no-store')
-  next()
-})
+  const originalSend = res.send;
+  res.send = function (body) {
+    try {
+      const data = JSON.parse(body);
+      if (Array.isArray(data)) {
+        res.set('X-Total-Count', data.length);
+      }
+    } catch {
+      // If it's not JSON or not an array, continue normally
+    }
+    originalSend.call(this, body);
+  };
+  next();
+});
 
 server.use(middlewares)
 
