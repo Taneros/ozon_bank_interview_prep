@@ -20,28 +20,21 @@ import { useUsers } from "@/hooks/useUsers";
 export const UserTable: FC = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
 
-  console.log(`UserTable/index.tsx - line: 23 ->> sorting`, sorting)
-
   const sortBy = sorting[0]?.id;
   const sortOrder = sorting[0] ? (sorting[0].desc ? "desc" : "asc") : undefined;
 
-  const {
-    data: usersData,
-    isLoading,
-    isError,
-    error,
-  } = useUsers({ 
-    sortBy, 
-    sortOrder 
+  const { data, isLoading, isError, error } = useUsers({
+    sortBy,
+    sortOrder,
   });
 
-  const columns = useColumns()
+  const columns = useColumns();
 
   const table = useReactTable({
-    data: usersData,
+    data,
     columns,
     state: {
-      sorting
+      sorting,
     },
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
