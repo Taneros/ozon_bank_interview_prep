@@ -7,7 +7,14 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 export const UserTable: FC = () => {
   const [usersData, setUsersData] = useState<User[]>([]);
@@ -36,11 +43,17 @@ export const UserTable: FC = () => {
     getCoreRowModel: getCoreRowModel(),
   });
 
+  const { getHeaderGroups, getRowModel } = table;
+
+  const headerGroups = getHeaderGroups();
+
+  const { rows } = getRowModel();
+
   return (
     <div className="rounded-md border">
       <Table>
         <TableHeader>
-          {table.getHeaderGroups().map((headerGroup) => (
+          {headerGroups.map((headerGroup) => (
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
                 <TableHead key={header.id}>
@@ -55,6 +68,24 @@ export const UserTable: FC = () => {
             </TableRow>
           ))}
         </TableHeader>
+        <TableBody>
+          {isLoading && (
+            <TableRow className="h-4 text-center">
+              <TableCell colSpan={columns.length}>Loading...</TableCell>
+            </TableRow>
+          )}
+
+          {!isLoading &&
+            rows.map((row) => (
+              <TableRow key={row.id}>
+                {row.getVisibleCells().map((cell) => (
+                  <TableCell key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+        </TableBody>
       </Table>
     </div>
   );
