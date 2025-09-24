@@ -1,5 +1,5 @@
 import { ArrowUpDown } from "lucide-react";
-import { type ColumnDef, type SortDirection } from "@tanstack/react-table";
+import { type SortDirection } from "@tanstack/react-table";
 
 
 export function HeaderButton({ 

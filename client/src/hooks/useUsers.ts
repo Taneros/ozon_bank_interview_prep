@@ -26,15 +26,22 @@ export const fetchUsers = async (
   return apiFetch<User[]>(url);
 };
 
+const EMPTY_ARRAY: User[] = [];
+
 export const useUsers = (sortOptions?: {
   sortBy?: string;
   sortOrder?: string;
 }) => {
   const { sortBy, sortOrder } = sortOptions || {};
 
-  return useQuery({
+  const query = useQuery({
     queryKey: ["users", sortBy, sortOrder],
     queryFn: () => fetchUsers(sortBy, sortOrder),
-    staleTime: 5 * 60 * 1000, // 5 mins
+    // staleTime: 5 * 60 * 1000,
   });
+
+  return {
+    ...query,
+    data: query.data || EMPTY_ARRAY,
+  };
 };
