@@ -1,7 +1,5 @@
-import { useEffect, useState, type FC } from "react";
-import type { User } from "@/components/userTable/constants";
-import { columns } from "@/components/userTable/constants";
-import { BASE_API } from "@/constants/api";
+import type { FC } from "react";
+import { columns } from "@/components/UserTable/constants";
 import {
   flexRender,
   getCoreRowModel,
@@ -15,27 +13,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useUsers } from "@/hooks/useUsers";
 
 export const UserTable: FC = () => {
-  const [usersData, setUsersData] = useState<User[]>([]);
-
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await fetch(BASE_API + "users");
-        const data = (await response.json()) as unknown as User[];
-        setUsersData(data);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchUsers();
-  }, []);
+  const { data: usersData = [], isLoading, isError, error } = useUsers();
 
   const table = useReactTable({
     data: usersData,
@@ -48,6 +29,23 @@ export const UserTable: FC = () => {
   const headerGroups = getHeaderGroups();
 
   const { rows } = getRowModel();
+
+  if (isError) {
+    return (
+      <div className="rounded-md border border-red-200 bg-red-50 p-4">
+        <div className="text-red-800 font-medium">Error loading users</div>
+        <div className="text-red-600 text-sm mt-1">
+          {error instanceof Error ? error.message : "Unknown error occurred"}
+        </div>
+        <button
+          onClick={() => window.location.reload()}
+          className="mt-2 px-4 py-2 bg-red-100 text-red-800 rounded hover:bg-red-200"
+        >
+          Retry
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="rounded-md border">
