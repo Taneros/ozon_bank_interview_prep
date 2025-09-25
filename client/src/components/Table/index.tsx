@@ -54,7 +54,7 @@ export const Table = <T,>({
 
   if (isError) {
     return (
-      <TableError error={error} onRetry={() => window.location.reload()} />
+      <TableError error={error} onRetry={onRetry || (() => window.location.reload())} />
     );
   }
 

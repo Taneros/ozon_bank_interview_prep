@@ -45,6 +45,7 @@ export const UserManagement = () => {
   const errorHandling = {
     isError,
     error,
+    onRetry: () => window.location.reload(),
   };
 
   const sortingProps = {
