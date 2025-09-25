@@ -6,6 +6,7 @@ import {
   getSortedRowModel,
   useReactTable,
   type SortingState,
+  type ColumnDef,
 } from "@tanstack/react-table";
 import {
   Table,
@@ -16,8 +17,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useUsers } from "@/hooks/useUsers";
+import { PaginationControls } from "@/components/UserTable/components/PaginationControls";
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 3;
+
+//todo refactor into a hook useUsers + all necessary useStates
 
 export const UserTable: FC = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -34,6 +38,8 @@ export const UserTable: FC = () => {
     }
   );
 
+  const totalPages = Math.ceil(totalCount / PAGE_SIZE);
+
   const columns = useColumns();
 
   const table = useReactTable({
@@ -45,6 +51,10 @@ export const UserTable: FC = () => {
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    manualPagination: true,
+    pageCount: totalPages,
+    enableColumnResizing: true,
+    columnResizeMode: 'onChange',
   });
 
   const { getHeaderGroups, getRowModel } = table;
@@ -52,6 +62,10 @@ export const UserTable: FC = () => {
   const headerGroups = getHeaderGroups();
 
   const { rows } = getRowModel();
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+  };
 
   if (isError) {
     return (
@@ -71,43 +85,93 @@ export const UserTable: FC = () => {
   }
 
   return (
-    <div className="rounded-md border">
-      <Table>
-        <TableHeader>
-          {headerGroups.map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <TableHead key={header.id}>
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
-                </TableHead>
-              ))}
-            </TableRow>
-          ))}
-        </TableHeader>
-        <TableBody>
-          {isLoading && (
-            <TableRow className="h-4 text-center">
-              <TableCell colSpan={columns.length}>Loading...</TableCell>
-            </TableRow>
-          )}
-
-          {!isLoading &&
-            rows.map((row) => (
-              <TableRow className="h-4 text-center" key={row.id}>
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
+    <div className="overflow-x-auto">
+      <div className="rounded-md border">
+        <Table className="w-full">
+          <TableHeader>
+            {headerGroups.map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <TableHead 
+                    key={header.id} 
+                    className="text-center relative"
+                    colSpan={header.colSpan}
+                    style={{
+                      width: header.getSize(),
+                      position: 'relative'
+                    }}
+                  >
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                    {/* Column resizer */}
+                    <div
+                      onMouseDown={header.getResizeHandler()}
+                      onTouchStart={header.getResizeHandler()}
+                      className={`absolute right-0 top-0 h-full w-1 bg-blue-500 opacity-0 hover:opacity-100 ${
+                        header.column.getIsResizing() ? 'opacity-100 bg-blue-700' : ''
+                      }`}
+                    />
+                  </TableHead>
                 ))}
               </TableRow>
             ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {isLoading && (
+              <>
+                <TableRow>
+                  <TableCell colSpan={columns.length} className="h-4 text-center">
+                    Loading...
+                  </TableCell>
+                </TableRow>
+                {Array.from({ length: PAGE_SIZE - 1 }).map((_, index) => (
+                  <TableRow key={index}>
+                    <TableCell colSpan={columns.length} className="h-4" />
+                  </TableRow>
+                ))}
+              </>
+            )}
+
+            {!isLoading &&
+              rows.map((row) => (
+                <TableRow className="h-4 text-center" key={row.id}>
+                  {row.getVisibleCells().map((cell) => {
+                    // Get className from meta if available
+                    const cellClassName = (cell.column.columnDef as ColumnDef<User, unknown>).meta?.className || '';
+                    return (
+                      <TableCell 
+                        key={cell.id}
+                        className={cellClassName}
+                        style={{
+                          width: cell.column.getSize(),
+                        }}
+                      >
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              ))}
+          </TableBody>
+        </Table>
+
+        {totalCount > 0 && (
+          <PaginationControls
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+            pageSize={PAGE_SIZE}
+            totalCount={totalCount}
+          />
+        )}
+      </div>
     </div>
   );
 };

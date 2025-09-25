@@ -29,6 +29,76 @@
       "profession": "Designer",
       "age": 30,
       "joinDate": "2023-01-20"
+    },
+    {
+      "id": "4",
+      "firstName": "Alexey",
+      "lastName": "Kozlov",
+      "email": "alexey.kozlov@example.com",
+      "city": "Novosibirsk",
+      "profession": "Data Scientist",
+      "age": 32,
+      "joinDate": "2022-08-19"
+    },
+    {
+      "id": "5",
+      "firstName": "Elena",
+      "lastName": "Vasilieva",
+      "email": "elena.vasilieva@example.com",
+      "city": "Yekaterinburg",
+      "profession": "Marketing Specialist",
+      "age": 29,
+      "joinDate": "2023-03-11"
+    },
+    {
+      "id": "6",
+      "firstName": "Dmitry",
+      "lastName": "Morozov",
+      "email": "dmitry.morozov@example.com",
+      "city": "Kazan",
+      "profession": "DevOps Engineer",
+      "age": 31,
+      "joinDate": "2022-12-05"
+    },
+    {
+      "id": "7",
+      "firstName": "Olga",
+      "lastName": "Novikova",
+      "email": "olga.novikova@example.com",
+      "city": "Nizhny Novgorod",
+      "profession": "HR Manager",
+      "age": 34,
+      "joinDate": "2022-07-22"
+    },
+    {
+      "id": "8",
+      "firstName": "Sergey",
+      "lastName": "Orlov",
+      "email": "sergey.orlov@example.com",
+      "city": "Chelyabinsk",
+      "profession": "Backend Developer",
+      "age": 27,
+      "joinDate": "2023-04-30"
+    },
+    {
+      "id": "9",
+      "firstName": "Tatiana",
+      "lastName": "Krylova",
+      "email": "tatiana.krylova@example.com",
+      "city": "Samara",
+      "profession": "Frontend Developer",
+      "age": 26,
+      "joinDate": "2023-02-14"
+    },
+    {
+      "id": "10",
+      "firstName": "Pavel",
+      "lastName": "Zakharov",
+      "email": "pavel.zakharov@example.com",
+      "city": "Omsk",
+      "profession": "QA Engineer",
+      "age": 33,
+      "joinDate": "2022-10-08"
     }
   ]
 }

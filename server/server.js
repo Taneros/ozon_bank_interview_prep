@@ -8,11 +8,11 @@ server.use((req, res, next) => {
   setTimeout(next, 1500)
 })
 
-// // Disable browser caching
-// server.use((req, res, next) => {
-//   res.setHeader('Cache-Control', 'no-store')
-//   next()
-// })
+// Disable browser caching
+server.use((req, res, next) => {
+  res.setHeader('Cache-Control', 'no-store')
+  next()
+})
 
 server.use((req, res, next) => {
   const originalSend = res.send;
@@ -20,6 +20,7 @@ server.use((req, res, next) => {
     try {
       const data = JSON.parse(body);
       if (Array.isArray(data)) {
+        console.log(`server/server.js - line: 23 ->> data.length`, data.length)
         res.set('X-Total-Count', data.length);
       }
     } catch {

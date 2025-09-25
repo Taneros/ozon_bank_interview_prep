@@ -55,6 +55,10 @@ export const useColumns = (): ColumnDef<User>[] => {
         accessorKey: "email",
         header: "Email",
         enableSorting: true,
+        size: 300,
+        meta: {
+          className: "min-w-[250px] max-w-[400px] break-words",
+        },
       },
       {
         accessorKey: "city",

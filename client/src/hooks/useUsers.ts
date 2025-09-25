@@ -1,7 +1,6 @@
 import type { User } from "@/components/UserTable/constants";
 import { API_BASE_URL } from "@/constants/api";
 import { useQuery } from "@tanstack/react-query";
-import { apiFetch } from "@/lib/api";
 
 export const fetchUsers = async (
   page?: number,
@@ -68,6 +67,6 @@ export const useUsers = (
     isError,
     error,
     users: data?.users || EMPTY_ARRAY,
-    totalCount: data?.totalCount,
+    totalCount: data?.totalCount || 0,
   };
 };
