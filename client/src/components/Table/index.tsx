@@ -27,15 +27,13 @@ export const Table = <T,>({
   isError = false,
   error,
   onRetry,
-  currentPage,
-  totalPages,
-  totalCount,
-  pageSize,
-  onPageChange,
+  pagination,
   className,
   sorting = [],
   onSortingChange = () => {},
 }: ITableProps<T>) => {
+  const { currentPage, totalPages, totalCount, pageSize, onPageChange } = pagination;
+
   const table = useReactTable({
     data,
     columns,

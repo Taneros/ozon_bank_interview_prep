@@ -14,8 +14,8 @@ export const UserManagement = () => {
   
   const { clearAllFilters, filters, hasActiveFilters, setGlobalSearch } = useUserFilters();
   
-  const sortBy = sorting[0]?.id || "";
-  const sortOrder = sorting[0] ? (sorting[0].desc ? "desc" : "asc") : "";
+  const sortBy = sorting[0]?.id;
+  const sortOrder = sorting[0] ? (sorting[0].desc ? "desc" : "asc") : undefined;
 
   const { totalCount, users, isLoading, isError, error } = useUsers(
     { page: currentPage, pageSize: PAGE_SIZE },
@@ -34,6 +34,14 @@ export const UserManagement = () => {
     setCurrentPage(newPage);
   };
 
+  const pagination = {
+    currentPage,
+    totalPages,
+    totalCount,
+    pageSize: PAGE_SIZE,
+    onPageChange: handlePageChange,
+  };
+
   return (
     <div className="container mx-auto py-10">
       <h1 className="text-2xl font-bold mb-6">User Management</h1>
@@ -49,11 +57,7 @@ export const UserManagement = () => {
         isLoading={isLoading}
         isError={isError}
         error={error}
-        currentPage={currentPage}
-        totalPages={totalPages}
-        totalCount={totalCount}
-        pageSize={PAGE_SIZE}
-        onPageChange={handlePageChange}
+        pagination={pagination}
         sorting={sorting}
         onSortingChange={setSorting}
       />
