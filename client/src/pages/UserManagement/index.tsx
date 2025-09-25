@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Table } from "@/components/Table";
-import { useColumns, type User } from "@/components/Table/constants";
+import { useColumns, type User } from "@/pages/UserManagement/constants";
 import { useUsers } from "@/hooks/useUsers";
 import { useUserFilters } from "@/hooks/useUserFilters";
 import type { SortingState } from "@tanstack/react-table";
