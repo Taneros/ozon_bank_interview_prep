@@ -17,7 +17,7 @@ export const TableSearch: FC<ITableSearchProps> = ({
   onClearFilters,
 }) => {
   return (
-    <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+    <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between my-4">
       <GlobalSearch
         onChange={onSearchChange}
         value={searchValue}
