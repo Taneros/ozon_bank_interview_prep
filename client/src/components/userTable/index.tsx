@@ -124,13 +124,13 @@ export const UserTable: FC = () => {
             {isLoading && (
               <>
                 <TableRow>
-                  <TableCell colSpan={columns.length} className="h-4 text-center">
+                  <TableCell colSpan={columns.length} className="h-2 text-center">
                     Loading...
                   </TableCell>
                 </TableRow>
                 {Array.from({ length: PAGE_SIZE - 1 }).map((_, index) => (
                   <TableRow key={index}>
-                    <TableCell colSpan={columns.length} className="h-4" />
+                    <TableCell colSpan={columns.length} className="h-2" />
                   </TableRow>
                 ))}
               </>
@@ -138,7 +138,7 @@ export const UserTable: FC = () => {
 
             {!isLoading &&
               rows.map((row) => (
-                <TableRow className="h-4 text-center" key={row.id}>
+                <TableRow className="h-2 text-center" key={row.id}>
                   {row.getVisibleCells().map((cell) => {
                     // Get className from meta if available
                     const cellClassName = (cell.column.columnDef as ColumnDef<User, unknown>).meta?.className || '';
