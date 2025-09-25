@@ -1,5 +1,5 @@
 import { useEffect, useState, type FC } from "react";
-import { useColumns, type User } from "@/components/UserTable/constants";
+import { useColumns, type User } from "@/components/Table/constants";
 import {
   flexRender,
   getCoreRowModel,
@@ -9,7 +9,7 @@ import {
   type ColumnDef,
 } from "@tanstack/react-table";
 import {
-  Table,
+  Table as ShadcnTable,
   TableBody,
   TableCell,
   TableHead,
@@ -17,17 +17,18 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useUsers } from "@/hooks/useUsers";
-import { PaginationControls } from "@/components/UserTable/components/PaginationControls";
 import { useUserFilters } from "@/hooks/useUserFilters";
-import { GlobalSearch } from "@/components/UserTable/components/GlobalSearch";
-import { Button } from "@/components/ui/button";
-import { X } from "lucide-react";
+import { PaginationControls } from "@/components/Table/components/PaginationControls";
+import { TableError } from "@/components/Table/components/TableError";
+import { TableSearch } from "@/components/Table/components/TableSearch";
 
 const PAGE_SIZE = 3;
 
-//todo refactor into a hook useUsers + all necessary useStates
+interface ITableProps {
+  className?: string;
+}
 
-export const UserTable: FC = () => {
+export const Table: FC<ITableProps> = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -80,48 +81,22 @@ export const UserTable: FC = () => {
 
   if (isError) {
     return (
-      <div className="rounded-md border border-red-200 bg-red-50 p-4">
-        <div className="text-red-800 font-medium">Error loading users</div>
-        <div className="text-red-600 text-sm mt-1">
-          {error instanceof Error ? error.message : "Unknown error occurred"}
-        </div>
-        <button
-          onClick={() => window.location.reload()}
-          className="mt-2 px-4 py-2 bg-red-100 text-red-800 rounded hover:bg-red-200"
-        >
-          Retry
-        </button>
-      </div>
+      <TableError error={error} onRetry={() => window.location.reload()} />
     );
   }
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-        <GlobalSearch
-          onChange={setGlobalSearch}
-          value={filters.globalSearch || ""}
-        />
-
-        {hasActiveFilters && (
-          <div>
-            <Button
-              className="flex items-center gap-2"
-              variant="outline"
-              size="sm"
-              onClick={clearAllFilters}
-            >
-              <X className="h-4 w-4" />
-              Clear Search
-            </Button>
-          </div>
-        )}
-
-      </div>
+      <TableSearch
+        searchValue={filters.globalSearch || ""}
+        onSearchChange={setGlobalSearch}
+        hasActiveFilters={hasActiveFilters}
+        onClearFilters={clearAllFilters}
+      />
 
       <div className="overflow-x-auto">
         <div className="rounded-md border">
-          <Table className="w-full">
+          <ShadcnTable className="w-full">
             <TableHeader>
               {headerGroups.map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
@@ -200,7 +175,7 @@ export const UserTable: FC = () => {
                   </TableRow>
                 ))}
             </TableBody>
-          </Table>
+          </ShadcnTable>
 
           {totalCount > 0 && (
             <PaginationControls

@@ -1,7 +1,6 @@
 import { ArrowUpDown } from "lucide-react";
 import { type SortDirection } from "@tanstack/react-table";
 
-
 export function HeaderButton({ 
   children, 
   onClick, 

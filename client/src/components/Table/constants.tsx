@@ -1,5 +1,5 @@
 import { type ColumnDef } from "@tanstack/react-table";
-import { HeaderButton } from "@/components/UserTable/components/HeaderButton";
+import { HeaderButton } from "@/components/Table/components/HeaderButton";
 import { useMemo } from "react";
 
 export type User = {

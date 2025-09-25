@@ -1,4 +1,4 @@
-import type { User } from "@/components/UserTable/constants";
+import type { User } from "@/components/Table/constants";
 import { API_BASE_URL } from "@/constants/api";
 import { useQuery } from "@tanstack/react-query";
 
