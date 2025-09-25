@@ -8,15 +8,23 @@ export interface IPaginationProps {
   onPageChange: (page: number) => void;
 }
 
+export interface IErrorProps {
+  isError?: boolean;
+  error?: unknown;
+  onRetry?: () => void;
+}
+
+export interface ISortingProps {
+  sorting?: SortingState;
+  onSortingChange?: OnChangeFn<SortingState>;
+}
+
 export interface ITableProps<T> {
   data: T[];
   columns: ColumnDef<T>[];
   isLoading?: boolean;
-  isError?: boolean;
-  error?: unknown;
-  onRetry?: () => void;
   pagination: IPaginationProps;
+  errorHandling: IErrorProps;
+  sorting: ISortingProps;
   className?: string;
-  sorting?: SortingState;
-  onSortingChange?: OnChangeFn<SortingState>;
 }

@@ -42,6 +42,16 @@ export const UserManagement = () => {
     onPageChange: handlePageChange,
   };
 
+  const errorHandling = {
+    isError,
+    error,
+  };
+
+  const sortingProps = {
+    sorting,
+    onSortingChange: setSorting,
+  };
+
   return (
     <div className="container mx-auto py-10">
       <h1 className="text-2xl font-bold mb-6">User Management</h1>
@@ -55,11 +65,9 @@ export const UserManagement = () => {
         data={users}
         columns={columns}
         isLoading={isLoading}
-        isError={isError}
-        error={error}
         pagination={pagination}
-        sorting={sorting}
-        onSortingChange={setSorting}
+        errorHandling={errorHandling}
+        sorting={sortingProps}
       />
     </div>
   );

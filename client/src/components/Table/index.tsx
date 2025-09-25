@@ -1,12 +1,9 @@
-import { type FC } from "react";
 import {
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
   useReactTable,
-  type SortingState,
   type ColumnDef,
-  type OnChangeFn,
 } from "@tanstack/react-table";
 import {
   Table as ShadcnTable,
@@ -24,21 +21,21 @@ export const Table = <T,>({
   data,
   columns,
   isLoading = false,
-  isError = false,
-  error,
-  onRetry,
   pagination,
+  errorHandling,
+  sorting,
   className,
-  sorting = [],
-  onSortingChange = () => {},
 }: ITableProps<T>) => {
-  const { currentPage, totalPages, totalCount, pageSize, onPageChange } = pagination;
+  const { currentPage, totalPages, totalCount, pageSize, onPageChange } =
+    pagination;
+  const { isError = false, error, onRetry } = errorHandling;
+  const { sorting: sortingState, onSortingChange } = sorting;
 
   const table = useReactTable({
     data,
     columns,
     state: {
-      sorting,
+      sorting: sortingState,
     },
     onSortingChange,
     getCoreRowModel: getCoreRowModel(),
