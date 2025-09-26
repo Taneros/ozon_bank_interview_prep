@@ -20,7 +20,6 @@ export const useUserFilters = () => {
     [allUsers]
   );
 
-
   const availableProfessions = useMemo(
     () => Array.from(new Set(allUsers.map((user) => user.profession))),
     [allUsers]
@@ -30,21 +29,39 @@ export const useUserFilters = () => {
     setFilters((prev) => ({ ...prev, globalSearch: search || undefined }));
   };
 
-  
   const setCityFilter = (city: string) => {
-    setFilters((prev) => ({ ...prev, city: city || undefined }));
-  };
-  
-  const setProfessionFilter = (profession: string) => {
-    setFilters((prev) => ({ ...prev, profession: profession || undefined }));
+    const isAllCities = city === "all";
+
+    console.log(`hooks/useUserFilters.ts - line: 35 ->> city`, city);
+
+    setFilters((prev) => ({
+      ...prev,
+      city: isAllCities ? "" : city || undefined,
+    }));
   };
 
-    const clearAllFilters = () => {
+  const setProfessionFilter = (profession: string) => {
+    const isAllProfessions = profession === "all";
+
+    console.log(
+      `hooks/useUserFilters.ts - line: 41 ->> profession`,
+      profession
+    );
+
+    setFilters((prev) => ({
+      ...prev,
+      profession: isAllProfessions ? "" : profession || undefined,
+    }));
+  };
+
+  const clearAllFilters = () => {
     setFilters({});
   };
 
   const hasActiveFilters = useMemo(() => {
-    return filters.globalSearch !== undefined && filters.globalSearch !== "";
+    return Object.values(filters).some(
+      (value) => value !== undefined && value !== ""
+    );
   }, [filters]);
 
   return {
@@ -57,6 +74,6 @@ export const useUserFilters = () => {
     availableCities,
     availableProfessions,
     isFiltersExpanded,
-    setIsFiltersExpanded
+    setIsFiltersExpanded,
   };
 };

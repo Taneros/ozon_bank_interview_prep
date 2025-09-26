@@ -32,7 +32,7 @@ export const ColumnFilterDropDown: FC<IColumnFilterDropDownProps> = ({
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="">All {label.toLowerCase()}s</SelectItem>
+          <SelectItem value="all">Every {label.toLowerCase()}</SelectItem>
           {options.map((option) => (
             <SelectItem key={option} value={option}>
               {option}
