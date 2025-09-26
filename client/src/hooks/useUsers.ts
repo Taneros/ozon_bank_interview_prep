@@ -29,6 +29,14 @@ export const fetchUsers = async (
     params.append("q", filters.globalSearch)
   }
 
+  if(filters?.city) {
+    params.append('city_like', filters.city)
+  }
+
+  if(filters?.profession) {
+    params.append('profession_like', filters.profession)
+  }
+
   const queryString = params.toString();
 
   const url = queryString

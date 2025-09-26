@@ -1,5 +1,7 @@
 export type TUserFilters = {
   globalSearch?: string;
+  city?: string;
+  profession?: string;
 }
 
 export type TPaginationOptions = {
