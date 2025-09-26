@@ -1,16 +1,9 @@
+import type { IPaginationControlsProps } from "@/components/Table/components/interfaces";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { FC } from "react";
 
-interface PaginationControlsProps {
-  currentPage: number;
-  totalPages: number;
-  onPageChange: (page: number) => void;
-  pageSize: number;
-  totalCount: number;
-}
-
-export const PaginationControls: FC<PaginationControlsProps> = ({
+export const PaginationControls: FC<IPaginationControlsProps> = ({
   currentPage,
   onPageChange,
   pageSize,

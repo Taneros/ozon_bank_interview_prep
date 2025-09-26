@@ -1,4 +1,4 @@
-import type { TUserFilters } from "@/hooks/useUsers";
+import type { TUserFilters } from "@/hooks/interfaces";
 import { useMemo, useState } from "react";
 
 export const useUserFilters = () => {

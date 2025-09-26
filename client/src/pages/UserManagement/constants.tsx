@@ -1,17 +1,7 @@
 import { type ColumnDef } from "@tanstack/react-table";
 import { HeaderButton } from "@/components/Table/components/HeaderButton";
 import { useMemo } from "react";
-
-export type User = {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  city: string;
-  profession: string;
-  age: number;
-  joinDate: string;
-};
+import type { User } from "@/types/interfaces";
 
 export const useColumns = (): ColumnDef<User>[] => {
   return useMemo(

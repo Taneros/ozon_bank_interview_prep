@@ -1,20 +1,7 @@
-import type { User } from "@/pages/UserManagement/constants";
+import type { User } from "@/types/interfaces";
 import { API_BASE_URL } from "@/constants/api";
 import { useQuery } from "@tanstack/react-query";
-
-export type TUserFilters = {
-  globalSearch?: string;
-}
-
-export type TPaginationOptions = {
-  page?: number;
-  pageSize?: number;
-};
-
-export type TSortOptions = {
-  sortBy?: string;
-  sortOrder?: string;
-};
+import type { TUserFilters, TPaginationOptions, TSortOptions } from "@/hooks/interfaces";
 
 export const fetchUsers = async (
   page?: number,

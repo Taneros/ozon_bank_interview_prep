@@ -2,13 +2,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search, X } from "lucide-react";
 import type { FC } from "react";
-
-interface ITableSearchProps {
-  searchValue: string;
-  onSearchChange: (value: string) => void;
-  hasActiveFilters?: boolean;
-  onClearFilters: () => void;
-}
+import type { ITableSearchProps } from "@/components/Table/components/interfaces";
 
 export const TableSearch: FC<ITableSearchProps> = ({
   searchValue,

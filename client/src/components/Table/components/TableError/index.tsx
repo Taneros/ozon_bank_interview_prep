@@ -1,10 +1,6 @@
 import { Button } from "@/components/ui/button";
 import type { FC } from "react";
-
-interface ITableErrorProps {
-  error: unknown;
-  onRetry: () => void;
-}
+import type { ITableErrorProps } from "@/components/Table/components/interfaces";
 
 export const TableError: FC<ITableErrorProps> = ({ error, onRetry }) => {
   return (
