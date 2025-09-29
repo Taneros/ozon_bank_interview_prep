@@ -107,6 +107,7 @@ export const UserManagement = () => {
         columns={columns}
         isLoading={isLoading}
         pagination={{ totalCount, pageSize: PAGE_SIZE }}
+        
         errorHandling={{
           isError,
           error,

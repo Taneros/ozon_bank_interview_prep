@@ -13,8 +13,10 @@ import type { ITableProps } from "@/components/Table/interfaces";
 import { TableError } from "@/components/Table/components/TableError";
 import { InfiniteScrollObserver } from "@/components/Table/components/InfiniteScrollObserver/InfiniteScrollObserver";
 import { TableLoading } from "@/components/CustomTable/components/TableLoading";
+import { TableBody } from "@/components/CustomTable/components/TableBody";
+import type { ICustomTableProps } from "@/components/CustomTable/interfaces";
 
-export const CustomTable = ({
+export const CustomTable = <T,>({
   data,
   columns,
   isLoading = false,
@@ -25,7 +27,7 @@ export const CustomTable = ({
   fetchNextPage,
   hasNextPage,
   isFetchingNextPage,
-}) => {
+}: ICustomTableProps<T>) => {
   const { isError = false, error, onRetry } = errorHandling;
   const { sorting: sortingState, onSortingChange } = sorting;
 
@@ -67,8 +69,25 @@ export const CustomTable = ({
     >
       <table className="w-full">
         <TableHeader headerGroups={headerGroups} />
-        <TableLoading columns={columns.length} />
+        {isLoading &&<TableLoading columns={columns.length} />}
+        {!isLoading && <TableBody rows={rows}/>}
       </table>
+
+            <InfiniteScrollObserver
+        onIntersect={fetchNextPage}
+        isFetching={isFetchingNextPage}
+        hasNextPage={hasNextPage}
+      />
+
+      {pagination && (
+          <PaginationControls
+            currentPage={pagination?.currentPage}
+            totalPages={pagination?.totalPages}
+            onPageChange={pagination?.onPageChange}
+            pageSize={pagination.pageSize}
+            totalCount={pagination.totalCount}
+          />
+        )}
     </div>
   );
 };

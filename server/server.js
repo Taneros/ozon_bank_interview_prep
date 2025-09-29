@@ -3,7 +3,6 @@ const server = jsonServer.create()
 const router = jsonServer.router('db.json')
 const middlewares = jsonServer.defaults()
 
-// Reduce delay to a more reasonable amount (150ms instead of 1800ms)
 server.use((req, res, next) => {
   setTimeout(next, 1500)
 })
