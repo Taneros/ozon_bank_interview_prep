@@ -1,20 +1,20 @@
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Table } from "@/components/Table";
 import { useColumns } from "@/pages/UserManagement/constants";
 import type { User } from "@/types/interfaces";
-import { useUsers } from "@/hooks/useUsers";
+import { EMPTY_USERS_ARRAY, useUsers } from "@/hooks/useUsers";
 import { useUserFilters } from "@/hooks/useUserFilters";
 import type { SortingState } from "@tanstack/react-table";
 import { TableSearch } from "@/components/Table/components/TableSearch";
 import { Button } from "@/components/ui/button";
 import { Filter, X } from "lucide-react";
 import { ColumnFilterDropDown } from "@/components/Table/components/ColumnFilterDropDown";
+import { useInfiniteUsers } from "@/hooks/useInfiniteUsers";
 
 export const PAGE_SIZE = 3;
 
 export const UserManagement = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
-  const [currentPage, setCurrentPage] = useState(1);
 
   const {
     availableCities,
@@ -22,18 +22,24 @@ export const UserManagement = () => {
     clearAllFilters,
     filters,
     hasActiveFilters,
-    isFiltersExpanded,
     setCityFilter,
     setGlobalSearch,
-    setIsFiltersExpanded,
     setProfessionFilter,
   } = useUserFilters();
 
   const sortBy = sorting[0]?.id;
   const sortOrder = sorting[0] ? (sorting[0].desc ? "desc" : "asc") : undefined;
 
-  const { totalCount, users, isLoading, isError, error } = useUsers(
-    { page: currentPage, pageSize: PAGE_SIZE },
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+    isError,
+    error,
+  } = useInfiniteUsers(
+    { pageSize: PAGE_SIZE },
     {
       sortBy,
       sortOrder,
@@ -41,32 +47,21 @@ export const UserManagement = () => {
     filters
   );
 
-  const totalPages = Math.ceil(totalCount / PAGE_SIZE);
+  const allUsers = useMemo(
+    () => data?.pages.flatMap((page) => page.users) || EMPTY_USERS_ARRAY,
+    [data]
+  );
+
+  const totalCount = data?.pages[0]?.totalCount || 0;
 
   const columns = useColumns();
 
-  const handlePageChange = (newPage: number) => {
-    setCurrentPage(newPage);
-  };
+  const handleLoadMore = useCallback(() => {
+    if(!isFetchingNextPage && hasNextPage) {
+      fetchNextPage()
+    }
+  }, [isFetchingNextPage, hasNextPage, fetchNextPage])
 
-  const pagination = {
-    currentPage,
-    totalPages,
-    totalCount,
-    pageSize: PAGE_SIZE,
-    onPageChange: handlePageChange,
-  };
-
-  const errorHandling = {
-    isError,
-    error,
-    onRetry: () => window.location.reload(),
-  };
-
-  const sortingProps = {
-    sorting,
-    onSortingChange: setSorting,
-  };
 
   return (
     <div className="container mx-auto py-10">
@@ -107,12 +102,22 @@ export const UserManagement = () => {
         </div>
       </div>
       <Table<User>
-        data={users}
+        data={allUsers}
         columns={columns}
         isLoading={isLoading}
-        pagination={pagination}
-        errorHandling={errorHandling}
-        sorting={sortingProps}
+        pagination={{ totalCount, pageSize: PAGE_SIZE }}
+        errorHandling={{
+          isError,
+          error,
+          onRetry: () => window.location.reload(),
+        }}
+        sorting={{
+          sorting,
+          onSortingChange: setSorting,
+        }}
+        fetchNextPage={handleLoadMore}
+        hasNextPage={hasNextPage}
+        isFetchingNextPage={isFetchingNextPage}
       />
     </div>
   );

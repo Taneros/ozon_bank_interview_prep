@@ -56,7 +56,7 @@ export const fetchUsers = async (
   return { users, totalCount };
 };
 
-const EMPTY_ARRAY: User[] = [];
+export const EMPTY_USERS_ARRAY: User[] = [];
 
 export const useUsers = (
   paginationOptions: TPaginationOptions,
@@ -78,7 +78,7 @@ export const useUsers = (
     isLoading,
     isError,
     error,
-    users: data?.users || EMPTY_ARRAY,
+    users: data?.users || EMPTY_USERS_ARRAY,
     totalCount: data?.totalCount || 0,
   };
 };

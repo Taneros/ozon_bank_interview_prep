@@ -77,8 +77,8 @@ export const useInfiniteUsers = (
 
   return useInfiniteQuery({
     queryKey: ["users", "infinite", pageSize, sortOptions, filters],
-    queryFn: ({ pageParam = 0 }) =>
-      fetchUsers(pageParam as number, pageSize, sortOptions, filters),
+    queryFn: ({ pageParam }) =>
+      fetchUsers(pageParam, pageSize, sortOptions, filters),
     getNextPageParam: (lastPage) => lastPage.nextPage,
     initialPageParam: 0,
     staleTime: 5 * 60 * 1000,

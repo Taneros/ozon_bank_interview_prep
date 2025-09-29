@@ -1,11 +1,16 @@
-import type { ColumnDef, SortingState, OnChangeFn } from "@tanstack/react-table";
+import type { FetchNextPageOptions } from "@tanstack/react-query";
+import type {
+  ColumnDef,
+  SortingState,
+  OnChangeFn,
+} from "@tanstack/react-table";
 
 export interface IPaginationProps {
-  currentPage: number;
-  totalPages: number;
+  currentPage?: number;
+  totalPages?: number;
   totalCount: number;
   pageSize: number;
-  onPageChange: (page: number) => void;
+  onPageChange?: (page: number) => void;
 }
 
 export interface IErrorProps {
@@ -23,8 +28,11 @@ export interface ITableProps<T> {
   data: T[];
   columns: ColumnDef<T>[];
   isLoading?: boolean;
-  pagination: IPaginationProps;
+  pagination?: IPaginationProps;
   errorHandling: IErrorProps;
   sorting: ISortingProps;
   className?: string;
+  fetchNextPage: (options?: FetchNextPageOptions) => void;
+  hasNextPage: boolean;
+  isFetchingNextPage: boolean;
 }
