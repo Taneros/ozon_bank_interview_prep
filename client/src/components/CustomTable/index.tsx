@@ -1,4 +1,4 @@
-import { TableHeader } from "@/components/CustomTable/components/TableHeader"
+import { TableHeader } from "@/components/CustomTable/components/TableHeader";
 
 import {
   flexRender,
@@ -12,6 +12,7 @@ import { PaginationControls } from "@/components/Table/components/PaginationCont
 import type { ITableProps } from "@/components/Table/interfaces";
 import { TableError } from "@/components/Table/components/TableError";
 import { InfiniteScrollObserver } from "@/components/Table/components/InfiniteScrollObserver/InfiniteScrollObserver";
+import { TableLoading } from "@/components/CustomTable/components/TableLoading";
 
 export const CustomTable = ({
   data,
@@ -24,8 +25,6 @@ export const CustomTable = ({
   fetchNextPage,
   hasNextPage,
   isFetchingNextPage,
-
-
 }) => {
   const { isError = false, error, onRetry } = errorHandling;
   const { sorting: sortingState, onSortingChange } = sorting;
@@ -60,13 +59,16 @@ export const CustomTable = ({
     );
   }
 
-
   return (
-    <div className={`overflow-hidden rounded-lg border border-gray-200 bg-white ${className || ''}`}>
-      <table className='w-full'>
-        <TableHeader headerGroups={headerGroups}/>
+    <div
+      className={`overflow-hidden rounded-lg border border-gray-200 bg-white ${
+        className || ""
+      }`}
+    >
+      <table className="w-full">
+        <TableHeader headerGroups={headerGroups} />
+        <TableLoading columns={columns.length} />
       </table>
-
     </div>
-  )
-}
+  );
+};
