@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Filter, X } from "lucide-react";
 import { ColumnFilterDropDown } from "@/components/Table/components/ColumnFilterDropDown";
 import { useInfiniteUsers } from "@/hooks/useInfiniteUsers";
+import { CustomTable } from "@/components/CustomTable";
 
 export const PAGE_SIZE = 3;
 
@@ -101,7 +102,7 @@ export const UserManagement = () => {
           </Button>
         </div>
       </div>
-      <Table<User>
+      <CustomTable<User>
         data={allUsers}
         columns={columns}
         isLoading={isLoading}
