@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Filter, X } from "lucide-react";
 import { ColumnFilterDropDown } from "@/components/Table/components/ColumnFilterDropDown";
 
-const PAGE_SIZE = 3;
+export const PAGE_SIZE = 3;
 
 export const UserManagement = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
