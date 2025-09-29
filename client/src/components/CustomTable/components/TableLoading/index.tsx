@@ -5,9 +5,6 @@ interface ITableLoadingProps {
 }
 
 export const TableLoading: FC<ITableLoadingProps> = ({columns}) => {
-
-  console.log(`TableLoading/index.tsx - line: 9 ->> columns`, columns)
-
   return (
     <tbody>
       {

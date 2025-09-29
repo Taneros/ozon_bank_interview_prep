@@ -20,16 +20,14 @@ export const CustomTable = <T,>({
   data,
   columns,
   isLoading = false,
-  pagination,
+  paginationOptions,
+  infiniteScrollOptions,
   errorHandling,
-  sorting,
+  sortingOptions,
   className,
-  fetchNextPage,
-  hasNextPage,
-  isFetchingNextPage,
 }: ICustomTableProps<T>) => {
   const { isError = false, error, onRetry } = errorHandling;
-  const { sorting: sortingState, onSortingChange } = sorting;
+  const { sorting: sortingState, onSortingChange } = sortingOptions;
 
   const table = useReactTable({
     data,
@@ -40,15 +38,13 @@ export const CustomTable = <T,>({
     onSortingChange,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    manualPagination: pagination && true,
-    pageCount: pagination && pagination.totalPages,
+    manualPagination: paginationOptions && true,
+    pageCount: paginationOptions && paginationOptions.totalPages,
     enableColumnResizing: true,
     columnResizeMode: "onChange",
   });
 
   const { getHeaderGroups, getRowModel } = table;
-
-  const headerGroups = getHeaderGroups();
 
   const { rows } = getRowModel();
 
@@ -68,24 +64,24 @@ export const CustomTable = <T,>({
       }`}
     >
       <table className="w-full">
-        <TableHeader headerGroups={headerGroups} />
+        <TableHeader headerGroups={getHeaderGroups()} />
         {isLoading &&<TableLoading columns={columns.length} />}
         {!isLoading && <TableBody rows={rows}/>}
       </table>
 
-            <InfiniteScrollObserver
-        onIntersect={fetchNextPage}
-        isFetching={isFetchingNextPage}
-        hasNextPage={hasNextPage}
+      <InfiniteScrollObserver
+        onIntersect={infiniteScrollOptions.fetchNextPage}
+        isFetching={infiniteScrollOptions.isFetchingNextPage}
+        hasNextPage={infiniteScrollOptions.hasNextPage}
       />
 
-      {pagination && (
+      {paginationOptions && (
           <PaginationControls
-            currentPage={pagination?.currentPage}
-            totalPages={pagination?.totalPages}
-            onPageChange={pagination?.onPageChange}
-            pageSize={pagination.pageSize}
-            totalCount={pagination.totalCount}
+            currentPage={paginationOptions.currentPage}
+            totalPages={paginationOptions.totalPages}
+            onPageChange={paginationOptions.onPageChange}
+            pageSize={paginationOptions.pageSize}
+            totalCount={paginationOptions.totalCount}
           />
         )}
     </div>

@@ -58,11 +58,10 @@ export const UserManagement = () => {
   const columns = useColumns();
 
   const handleLoadMore = useCallback(() => {
-    if(!isFetchingNextPage && hasNextPage) {
-      fetchNextPage()
+    if (!isFetchingNextPage && hasNextPage) {
+      fetchNextPage();
     }
-  }, [isFetchingNextPage, hasNextPage, fetchNextPage])
-
+  }, [isFetchingNextPage, hasNextPage, fetchNextPage]);
 
   return (
     <div className="container mx-auto py-10">
@@ -106,20 +105,20 @@ export const UserManagement = () => {
         data={allUsers}
         columns={columns}
         isLoading={isLoading}
-        pagination={{ totalCount, pageSize: PAGE_SIZE }}
-        
+        infiniteScrollOptions={{
+          fetchNextPage: handleLoadMore,
+          hasNextPage,
+          isFetchingNextPage,
+        }}
         errorHandling={{
           isError,
           error,
           onRetry: () => window.location.reload(),
         }}
-        sorting={{
+        sortingOptions={{
           sorting,
           onSortingChange: setSorting,
         }}
-        fetchNextPage={handleLoadMore}
-        hasNextPage={hasNextPage}
-        isFetchingNextPage={isFetchingNextPage}
       />
     </div>
   );

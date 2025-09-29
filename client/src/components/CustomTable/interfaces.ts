@@ -6,11 +6,17 @@ import type {
 } from "@tanstack/react-table";
 
 export interface IPaginationProps {
-  currentPage?: number;
-  totalPages?: number;
+  currentPage: number;
+  totalPages: number;
   totalCount: number;
   pageSize: number;
-  onPageChange?: (page: number) => void;
+  onPageChange: (page: number) => void;
+}
+
+export interface IInfiniteScrollOptions<T> {
+  fetchNextPage: (options?: FetchNextPageOptions) => void;
+  hasNextPage: boolean;
+  isFetchingNextPage: boolean;
 }
 
 export interface IErrorProps {
@@ -28,11 +34,9 @@ export interface ICustomTableProps<T> {
   data: T[];
   columns: ColumnDef<T>[];
   isLoading?: boolean;
-  pagination?: IPaginationProps;
+  paginationOptions?: IPaginationProps;
+  infiniteScrollOptions?: IInfiniteScrollOptions<T>;
   errorHandling: IErrorProps;
-  sorting: ISortingProps;
+  sortingOptions: ISortingProps;
   className?: string;
-  fetchNextPage: (options?: FetchNextPageOptions) => void;
-  hasNextPage: boolean;
-  isFetchingNextPage: boolean;
 }
