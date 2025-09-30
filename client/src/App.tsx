@@ -1,14 +1,17 @@
 import "./App.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { LineChart } from "./Components/LineChart";
 
 const queryClient = new QueryClient();
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <div>Ozon 123</div>
+      < LineChart />
     </QueryClientProvider>
   );
 }
 
 export default App;
+
+
